@@ -1,0 +1,20 @@
+name: tiktok_clone
+description: A TikTok clone Flutter app with Firebase Authentication
+
+environment:
+  sdk: ">=2.17.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  firebase_core: ^2.10.0
+  firebase_auth: ^4.6.3
+  google_sign_in: ^5.4.2
+  flutter_secure_storage: ^8.0.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+flutter:
+  uses-material-design: true
