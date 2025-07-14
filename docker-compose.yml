@@ -1,0 +1,68 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: tiktok
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  redis:
+    image: redis:7
+    restart: always
+    ports:
+      - "6379:6379"
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    restart: always
+    environment:
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_USERNAME: postgres
+      DB_PASSWORD: password
+      DB_NAME: tiktok
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      # Add other env vars like AWS, Firebase config here
+    depends_on:
+      - postgres
+      - redis
+    ports:
+      - "3000:3000"
+
+  admin-panel:
+    build:
+      context: ./admin-panel
+    restart: always
+    environment:
+      NEXT_PUBLIC_API_BASE_URL: http://localhost:3000/api
+      NEXT_PUBLIC_FIREBASE_API_KEY: your_firebase_api_key
+      NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN: your_firebase_auth_domain
+      NEXT_PUBLIC_FIREBASE_PROJECT_ID: your_firebase_project_id
+      NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET: your_firebase_storage_bucket
+      NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID: your_firebase_messaging_sender_id
+      NEXT_PUBLIC_FIREBASE_APP_ID: your_firebase_app_id
+    depends_on:
+      - backend
+    ports:
+      - "3001:3000"
+
+  frontend:
+    build:
+      context: ./frontend
+    restart: always
+    ports:
+      - "3002:80"
+    # Optional: configure for Flutter Web if applicable
+
+volumes:
+  pgdata:
