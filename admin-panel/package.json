@@ -1,0 +1,22 @@
+{
+  "name": "tiktok-admin-panel",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
+  },
+  "dependencies": {
+    "@types/firebase": "^3.2.3",
+    "firebase": "^11.10.0",
+    "next": "13.4.4",
+    "react": "18.2.0",
+    "react-dom": "18.2.0"
+  },
+  "devDependencies": {
+    "@types/axios": "^0.14.4",
+    "@types/node": "^24.0.13",
+    "axios": "^1.10.0"
+  }
+}
